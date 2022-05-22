@@ -74,7 +74,31 @@ const Inbox = () => {
             </Grid>
           </Grid>
         </StyledPaper>
+        <StyledPaper
+          sx={{
+              backgroundColor: '#b5c7d0',
+            my: 1,
+            mx: 0,
+            p: 1,
+          }}
+        >
+          <Grid container wrap="nowrap" spacing={2}>
+            <Grid item>
+            <StyledBadge
+        overlap="circular"
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        variant="dot"
+      >
+        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+      </StyledBadge>
+            </Grid>
+            <Grid item xs>
+              <Typography>{message}</Typography>
+            </Grid>
+          </Grid>
+        </StyledPaper>
       </Box>
+
     </Fragment>
   );
 };
