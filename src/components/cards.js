@@ -6,7 +6,7 @@ import Calander from "./cards/calender";
 import '@fontsource/roboto/300.css';
 import Typography from '@mui/material/Typography';
 import Weather from "./cards/weather";
-import Breakingnews from "./cards/breakingnews";
+
 import Lclock from "./liveclock";
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

@@ -30,8 +30,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Inbox from "./inbox";
 import Cards from "./cards";
-import Breakingnews from "./cards/breakingnews";
+
 import News from "./news";
+import CampaignIcon from '@mui/icons-material/Campaign';
+import Sentbox from "./sentbox";
 
 const drawerWidth = 240;
 
@@ -366,12 +368,18 @@ export default function Dashboard() {
               >
                 <ListItemIcon
                   sx={{
-                    minWidth: 0,
+
+                    height: 20,
+
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
+                    color: "#1c444c"
                   }}
                 >
-                  { <InboxIcon /> }
+                  <Badge color="secondary" variant="dot">
+  <CampaignIcon />
+</Badge>
+                  {/* { <CampaignIcon /> } */}
                 </ListItemIcon>
                 <ListItemText primary="Announcements" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
@@ -400,7 +408,8 @@ export default function Dashboard() {
           <Divider />
           <List>
             <News />
-          <Breakingnews />
+            <Sentbox />
+
             <DrawerHeader>
 
               <Messageheader />

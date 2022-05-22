@@ -25,7 +25,7 @@ const News = () => {
 <CircularStatic />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Loading Breaking News" secondary={date} />
+        <ListItemText primary="Loading Components" secondary={date} />
       </ListItem>
       <Divider variant="inset" component="li" />
 
