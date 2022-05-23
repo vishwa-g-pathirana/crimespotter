@@ -30,10 +30,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Inbox from "./inbox";
 import Cards from "./cards";
+import MyComponent from "./googlemap";
 
 import News from "./news";
-import CampaignIcon from '@mui/icons-material/Campaign';
+import CampaignIcon from "@mui/icons-material/Campaign";
 import Sentbox from "./sentbox";
+import Notifications from "./notification";
+
 
 const drawerWidth = 240;
 
@@ -231,7 +234,7 @@ export default function Dashboard() {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p>Emergency Alerts</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -357,37 +360,36 @@ export default function Dashboard() {
         </DrawerHeader>
         <Divider />
         <List>
-
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  height: 20,
+
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                  color: "#1c444c",
                 }}
               >
-                <ListItemIcon
-                  sx={{
-
-                    height: 20,
-
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                    color: "#1c444c"
-                  }}
-                >
-                  <Badge color="secondary" variant="dot">
-  <CampaignIcon />
-</Badge>
-                  {/* { <CampaignIcon /> } */}
-                </ListItemIcon>
-                <ListItemText primary="Announcements" sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-
+                <Badge color="secondary" variant="dot">
+                  <CampaignIcon />
+                </Badge>
+                {/* { <CampaignIcon /> } */}
+              </ListItemIcon>
+              <ListItemText
+                primary="Emergency Alerts"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+          <Notifications />
         </List>
-        <Divider />
-
       </Drawer>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
@@ -411,7 +413,6 @@ export default function Dashboard() {
             <Sentbox />
 
             <DrawerHeader>
-
               <Messageheader />
               {/* <ListItem>
         <ListItemAvatar>
@@ -423,22 +424,19 @@ export default function Dashboard() {
       </ListItem> */}
             </DrawerHeader>
 
-              <ListItem disablePadding>
-
-                <ListItemButton>
-
-                 <Inbox />
-
-                </ListItemButton>
-              </ListItem>
-
+            <ListItem disablePadding>
+              <ListItemButton>
+                <Inbox />
+              </ListItemButton>
+            </ListItem>
           </List>
         </Drawer>
       </Box>
       <Box component="main" sx={{ flexGrow: 1, p: 3, paddingRight: 30 }}>
         <DrawerHeader />
         <Cards />
-
+        <br></br>
+<MyComponent />
       </Box>
     </Box>
   );
