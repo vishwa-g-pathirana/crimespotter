@@ -24,7 +24,7 @@ const Notifications = () => {
 
       <CardContent>
         <Typography gutterBottom variant="h9" component="div">
-          Saman Kumara
+          Mr. Èxample name
         </Typography>
         <Chip icon={<LocationOnIcon />} label="Kiribathgoda" />
       </CardContent>

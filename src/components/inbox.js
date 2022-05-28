@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -6,6 +6,11 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Badge from '@mui/material/Badge';
+import { Collections } from "@mui/icons-material";
+import { db } from "../firebase-config";
+import {collection, getDocs} from "firebase/firestore";
+import IconButton from '@mui/material/IconButton';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -45,13 +50,26 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
-const message = `i need help`;
+const message1 = `i need help`;
 
 const Inbox = () => {
+  const [message, setMessage] = useState([]);
+  const usersCollectionRef = collection(db, "inbox")
+
+const getMsg = async () => {
+const data = await getDocs(usersCollectionRef);
+setMessage(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+
+};
+  useEffect (() => {
+getMsg()
+  },[]);
+  setInterval(getMsg,10000);
   return (
     <Fragment>
       <Box sx={{ flexGrow: 1, overflow: "hidden", px: 0 }}>
-        <StyledPaper
+        {message.map((msg)=>{
+          return <StyledPaper
           sx={{
               backgroundColor: '#b5c7d0',
             my: 1,
@@ -70,33 +88,17 @@ const Inbox = () => {
       </StyledBadge>
             </Grid>
             <Grid item xs>
-              <Typography>{message}</Typography>
+              <Typography sx={{color: 'gray'}} variant="h9">{msg.name}</Typography>
+              <Typography>{msg.message}</Typography>
             </Grid>
+            <IconButton sx={{color: '#781f19'}} aria-label="upload picture" component="span">
+    <RemoveCircleOutlineIcon />
+  </IconButton>
           </Grid>
         </StyledPaper>
-        <StyledPaper
-          sx={{
-              backgroundColor: '#b5c7d0',
-            my: 1,
-            mx: 0,
-            p: 1,
-          }}
-        >
-          <Grid container wrap="nowrap" spacing={2}>
-            <Grid item>
-            <StyledBadge
-        overlap="circular"
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        variant="dot"
-      >
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-      </StyledBadge>
-            </Grid>
-            <Grid item xs>
-              <Typography>{message}</Typography>
-            </Grid>
-          </Grid>
-        </StyledPaper>
+        })}
+
+
       </Box>
 
     </Fragment>

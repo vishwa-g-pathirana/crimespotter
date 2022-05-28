@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import SendIcon from "@mui/icons-material/Send";
+import {db} from "../firebase-config";
+import {collection , getDocs, addDoc} from "firebase/firestore";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -18,16 +20,22 @@ const Sentbox = () => {
   const [value, setValue] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [erropen, seterrOpen] = React.useState(false);
+  const usersCollectionRef = collection (db , "sentbox");
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+const sentmsg = async () => {
+  await addDoc (usersCollectionRef, {message : value})
+}
+
   const handleClick = () => {
     if (value === "") {
       seterrOpen(true);
     } else {
       setOpen(true);
       setValue("");
+      sentmsg();
     }
   };
 
