@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import { color } from "@mui/system";
+import {db} from "../firebase-config";
+import {collection, getDoc} from "firebase/firestore";
+import Markers from "./marker";
 
 const containerStyle = {
   width: "900px",
@@ -19,30 +22,46 @@ function MyComponent() {
   });
 
   const [map, setMap] = React.useState(null);
+  const [alt , setAlt] = useState([])
+  const [lng, setLng] = useState([]);
+  const [lat, setLat] = useState([]);
+  const usersCollectionRef = collection(db, "alert");
+
+const getAlt = async () =>{
+  const data = await getDoc(usersCollectionRef);
+  console.log(data)
+  console.log("hi")
+  setAlt(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+};
 
   const onLoad = React.useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
     setMap(map);
+    console.log("hi")
+    getAlt()
   }, []);
 
   const onUnmount = React.useCallback(function callback(map) {
     setMap(null);
   }, []);
-
+  useEffect(()=>{
+    getAlt()
+  },[]);
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
       zoom={5}
-      onLoad={onLoad}
+      onLoad={onLoad && getAlt}
       onUnmount={onUnmount}
     >
       {/* Child components, such as markers, info windows, etc. */}
       <></>
-      <Marker
+      {alt.map((alts)=>{
+        return <Marker
 
-        label={{text:'hey',color:'#fff'}}
+        label={{text:`${alts.name}`,color:'#fff'}}
 
         // icon={{
         //   url: "some_img_link",
@@ -52,22 +71,10 @@ function MyComponent() {
           lng: 79.8612,
         }}
       />
-      <Marker  position={{
-          lat: 6.9271,
-          lng: 79.8612,
-        }}>
-          <label></label>
-      </Marker>
-       <Marker
-        label={{text:'hey hey hey hey',color:'#fff'}}
-        // icon={{
-        //   url: "some_img_link",
-        // }}
-        position={{
-          lat: 6.9778,
-          lng: 79.9272,
-        }}
-      />
+      })}
+
+      <Markers />
+
     </GoogleMap>
   ) : (
     <></>

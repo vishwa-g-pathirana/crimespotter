@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Badge from '@mui/material/Badge';
 import { Collections } from "@mui/icons-material";
 import { db } from "../firebase-config";
-import {collection, getDocs} from "firebase/firestore";
+import {collection, getDocs ,addDoc, deleteDoc ,doc} from "firebase/firestore";
 import IconButton from '@mui/material/IconButton';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
@@ -61,6 +61,12 @@ const data = await getDocs(usersCollectionRef);
 setMessage(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
 
 };
+
+const deleteMsg = async (id) => {
+  const userDoc = doc(db, "inbox", id);
+  await deleteDoc(userDoc);
+  getMsg();
+};
   useEffect (() => {
 getMsg()
   },[]);
@@ -91,7 +97,7 @@ getMsg()
               <Typography sx={{color: 'gray'}} variant="h9">{msg.name}</Typography>
               <Typography>{msg.message}</Typography>
             </Grid>
-            <IconButton sx={{color: '#781f19'}} aria-label="upload picture" component="span">
+            <IconButton onClick={()=>{deleteMsg(msg.id)}} sx={{color: '#781f19'}} aria-label="upload picture" component="span">
     <RemoveCircleOutlineIcon />
   </IconButton>
           </Grid>

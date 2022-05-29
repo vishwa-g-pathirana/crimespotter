@@ -274,7 +274,7 @@ export default function Dashboard() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            MUI
+            Crime Spotter
           </Typography>
           <Search>
             <SearchIconWrapper>
